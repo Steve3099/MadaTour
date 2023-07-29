@@ -16,7 +16,7 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".vue.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MadaTour.NoActionBar" >
