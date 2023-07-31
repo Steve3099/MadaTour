@@ -59,7 +59,9 @@
             android:hint="Nom"
             android:textColorHint="@color/black"
             app:boxStrokeColor="@color/black">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text" />
@@ -77,9 +79,10 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_prenom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -94,6 +97,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
@@ -113,10 +117,10 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-               />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/confirm_password"
@@ -131,23 +135,26 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_confirmpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <Button
+            android:id="@+id/reg_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="5dp"
             android:background="@color/blue"
+            android:onClick="registerUser"
             android:text="CREER COMPTE"
             android:textColor="#fff"
-            app:backgroundTint="@color/blue"
             android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/black"
             android:transitionName="button_trans"
-            />
+            app:backgroundTint="@color/blue"
+            app:boxStrokeColor="@color/black" />
         <Button
             android:id="@+id/call_login"
             android:layout_width="match_parent"
