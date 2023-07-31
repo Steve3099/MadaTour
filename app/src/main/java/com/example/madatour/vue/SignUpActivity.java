@@ -2,6 +2,8 @@ package com.example.madatour.vue;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.madatour.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,6 +11,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SignUpActivity extends AppCompatActivity {
 
