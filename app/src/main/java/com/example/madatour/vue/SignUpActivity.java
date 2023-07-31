@@ -93,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         else{
             regEmail.setError(null);
+            regEmail.setErrorEnabled(false);
             return true;
         }
     }private Boolean validatePassword(){
@@ -108,6 +109,8 @@ public class SignUpActivity extends AppCompatActivity {
         if(val.equals(confirmpass)) {
             regPassword.setError(null);
             regConfirmPassword.setError(null);
+            regPassword.setErrorEnabled(false);
+            regConfirmPassword.setErrorEnabled(false);
             return true;
         }else{
             regConfirmPassword.setError("Veuillez bien confirmer le mot de passe");

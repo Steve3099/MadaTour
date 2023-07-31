@@ -57,4 +57,41 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+    private Boolean validateEmail(){
+        String val = mail.getEditText().getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        if(val.isEmpty()){
+            mail.setError("Le champ ne peut pas être vide");
+            return false;
+        }
+        else if (!val.matches(emailPattern)){
+            mail.setError("Email invalide");
+            return false;
+        }
+        else{
+            mail.setError(null);
+            mail.setErrorEnabled(false);
+            return true;
+        }
+    }private Boolean validatePassword(){
+        String val = password.getEditText().getText().toString();
+
+        if(val.isEmpty() ){
+            password.setError("Le champ ne peut pas être vide,ajoutez + 5 caractères");
+            return false;
+        }
+        else {
+            password.setError(null);
+            password.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    public void login(View view){
+        if(!validateEmail() | !validatePassword() ){
+            return;
+        }
+        String email = mail.getEditText().getText().toString();
+        String passwordval = password.getEditText().getText().toString();
+    }
 }
