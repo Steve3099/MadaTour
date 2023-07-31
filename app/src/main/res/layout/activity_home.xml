@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical"
-    android:padding="20dp"
-    tools:context=".vue.HomeActivity">
+    tools:context=".vue.HomeActivity"
+    android:layout_marginHorizontal="20dp"
+    >
 
     <ImageView
         android:id="@+id/logo_image"
@@ -45,7 +46,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email">
+            android:hint="Email"
+            android:textColorHint="@color/black"
+            app:boxStrokeColor="@color/black"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -60,7 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="Mot de passe"
-            app:passwordToggleEnabled="true">
+            android:textColorHint="@color/black"
+            app:passwordToggleEnabled="true"
+            app:boxStrokeColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -91,11 +97,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="2dp"
-            android:background="#0000
-"
+            android:background="#0000"
             android:elevation="0dp"
             android:text="Pas de compte? CREER "
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:id="@+id/signup_screen"/>
     </LinearLayout>
 
 </LinearLayout>
