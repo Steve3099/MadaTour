@@ -9,4 +9,20 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Profile</string>
+
+
+<!--    String dashboard-->
+    <string name="dashboard_logo_name">Voyagez à Madagascar</string>
+    <string name="dashboard_decouvrez">Decouvrez Madagascar</string>
+    <string name="dashboard_decouvrez_desc">Decouvrez ces monuments,sites touristique,faune et flore</string>
+    <string name="dashboard_views">Les plus populaires</string>
+    <string name="search_text">Recherche...</string>
+    <string name="view_all">Voir tout</string>
+    <string name="categorie">Catégories</string>
+
+
+
 </resources>

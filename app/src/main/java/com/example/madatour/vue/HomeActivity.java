@@ -93,5 +93,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         String email = mail.getEditText().getText().toString();
         String passwordval = password.getEditText().getText().toString();
+        Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
+        startActivity(intent);
     }
 }
