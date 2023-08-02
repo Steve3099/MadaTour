@@ -72,9 +72,9 @@ public class HomeFragment extends Fragment {
         featuredCategoryRecycler.setHasFixedSize(true);
         featuredCategoryRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         ArrayList<Category> listCategory = new ArrayList<>();
-        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.lemurs)));
-        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.lemurs)));
-        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.lemurs)));
+        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
+        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
+        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
 
         adaptercategory = new CategoryAdapter(listCategory);
         featuredCategoryRecycler.setAdapter(adaptercategory);

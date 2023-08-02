@@ -5,7 +5,9 @@
     android:id="@+id/coordinatorLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".vue.MainActivity">
+    tools:context=".vue.MainActivity"
+    android:background="@color/white"
+    >
 
     <ImageView
         android:id="@+id/imageView2"
