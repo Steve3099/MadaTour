@@ -1,5 +1,6 @@
 package com.example.madatour.vue.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,11 +23,13 @@ import com.example.madatour.controler.TourismAdapter;
 import com.example.madatour.databinding.FragmentHomeBinding;
 import com.example.madatour.modele.Category;
 import com.example.madatour.modele.Tourism;
+import com.example.madatour.recycler.RecyclerViewInterface;
 import com.example.madatour.util.SpacesItemDecoration;
+import com.example.madatour.vue.ui.detail.DetailFragment;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerViewInterface {
 
     private FragmentHomeBinding binding;
 
@@ -74,7 +78,7 @@ public class HomeFragment extends Fragment {
         listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",(R.drawable.lemurs),"Monuments"));
         listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",(R.drawable.lemurs),"Monuments"));
         listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",(R.drawable.lemurs),"Monuments"));
-        adapter = new TourismAdapter(listTourism);
+        adapter = new TourismAdapter(this,listTourism);
         featuredTourismRecycler.setAdapter(adapter);
 //        Add space in first list
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
@@ -98,5 +102,17 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+//        Intent intent = new Intent()
+        Fragment frag = new DetailFragment();
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.nav_host_fragment_activity_dashboard, frag);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
