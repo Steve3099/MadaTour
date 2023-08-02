@@ -1,10 +1,10 @@
 package com.example.madatour.modele;
 
 public class Tourism {
-    String id,titre,description;
-    Integer categorie,image;
+    String id,titre,description,categorie;
+    Integer image;
 
-    public Tourism(String id, String titre, String description, Integer image, Integer categorie) {
+    public Tourism(String id, String titre, String description, Integer image, String categorie) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -44,11 +44,11 @@ public class Tourism {
         this.image = image;
     }
 
-    public Integer getCategorie() {
+    public String getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(Integer categorie) {
+    public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
 }

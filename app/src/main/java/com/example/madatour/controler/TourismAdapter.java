@@ -45,7 +45,7 @@ public class TourismAdapter extends RecyclerView.Adapter<TourismAdapter.TourismV
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listTourism.size();
     }
 
     public static class TourismViewHolder extends RecyclerView.ViewHolder{

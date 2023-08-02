@@ -101,29 +101,34 @@
                 android:layout_marginLeft="20dp"
                 android:background="@color/banner_background_light"
                 >
+
                 <LinearLayout
                     android:id="@+id/feature_background"
                     android:layout_width="170dp"
                     android:layout_height="280dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@color/banner_background"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dashboard_decouvrez"
-                        android:textSize="20sp"
-                        android:textColor="@color/black"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="50dp"
+                        android:text="@string/dashboard_decouvrez"
                         android:textAllCaps="true"
-                        android:layout_marginLeft="10dp"/>
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
+                        android:layout_margin="10dp"
                         android:text="@string/dashboard_decouvrez_desc"
-                        android:layout_margin="10dp"/>
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
