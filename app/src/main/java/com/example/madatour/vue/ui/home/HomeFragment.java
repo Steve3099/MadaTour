@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +26,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView featuredTourismRecycler;
     RecyclerView.Adapter adapter;
-
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -34,12 +35,19 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        View view =inflater.inflate(R.layout.fragment_home, container,false);
+//        View view =inflater.inflate(R.layout.fragment_home, container,false);
     // Hook
-            featuredTourismRecycler = view.findViewById(R.id.featured_tourism_recycler);
 
-        featuredTourismRecycler();
+
+//        featuredTourismRecycler();
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        featuredTourismRecycler = view.findViewById(R.id.featured_tourism_recycler);
+        featuredTourismRecycler();
     }
 
     private void featuredTourismRecycler() {
