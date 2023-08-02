@@ -85,22 +85,22 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/featured_category"
                     android:layout_width="match_parent"
-                    android:layout_height="170dp" />
+                    android:layout_height="160dp" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/banner_background_light"
                 >
 
                 <LinearLayout
                     android:id="@+id/feature_background"
-                    android:layout_width="170dp"
-                    android:layout_height="280dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="-50dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
@@ -110,31 +110,33 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="40dp"
                         android:text="@string/dashboard_decouvrez"
                         android:textAllCaps="true"
                         android:textColor="@color/black"
                         android:textSize="20sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="@string/dashboard_decouvrez_desc"
-                        android:textColor="@color/black" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="10dp"-->
+<!--                        android:text="@string/dashboard_decouvrez_desc"-->
+<!--                        android:textColor="@color/black" />-->
                 </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/featured_tourism_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:layout_toRightOf="@+id/feature_background"
-                    android:background="#737678" />
 
 
             </RelativeLayout>
-
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/featured_tourism_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                     />
+            </RelativeLayout>
 
 
 
