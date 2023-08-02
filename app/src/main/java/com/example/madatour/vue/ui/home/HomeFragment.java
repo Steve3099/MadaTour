@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.madatour.R;
+import com.example.madatour.controler.CategoryAdapter;
 import com.example.madatour.controler.TourismAdapter;
+
 import com.example.madatour.databinding.FragmentHomeBinding;
+import com.example.madatour.modele.Category;
 import com.example.madatour.modele.Tourism;
 
 import java.util.ArrayList;
@@ -25,7 +28,10 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
 
     RecyclerView featuredTourismRecycler;
+
+    RecyclerView featuredCategoryRecycler;
     RecyclerView.Adapter adapter;
+    RecyclerView.Adapter adaptercategory;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +53,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         featuredTourismRecycler = view.findViewById(R.id.featured_tourism_recycler);
+        featuredCategoryRecycler = view.findViewById(R.id.featured_category);
         featuredTourismRecycler();
+        featuredCategoryRecycler();
     }
 
     private void featuredTourismRecycler() {
@@ -60,6 +68,19 @@ public class HomeFragment extends Fragment {
         adapter = new TourismAdapter(listTourism);
         featuredTourismRecycler.setAdapter(adapter);
     }
+    private void featuredCategoryRecycler() {
+        featuredCategoryRecycler.setHasFixedSize(true);
+        featuredCategoryRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
+        ArrayList<Category> listCategory = new ArrayList<>();
+        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.lemurs)));
+        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.lemurs)));
+        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.lemurs)));
+
+        adaptercategory = new CategoryAdapter(listCategory);
+        featuredCategoryRecycler.setAdapter(adaptercategory);
+    }
+
+
 
     @Override
     public void onDestroyView() {

@@ -9,12 +9,12 @@
     android:background="@color/home_background"
     >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        >
-    </RelativeLayout>
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:padding="20dp"-->
+<!--        >-->
+<!--    </RelativeLayout>-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -88,10 +88,11 @@
 
 
                 </RelativeLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/featured_category"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    />
+                    android:layout_height="100dp" />
             </LinearLayout>
 
             <RelativeLayout
