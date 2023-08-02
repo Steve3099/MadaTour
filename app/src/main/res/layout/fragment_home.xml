@@ -125,12 +125,13 @@
                         android:text="@string/dashboard_decouvrez_desc"
                         android:layout_margin="10dp"/>
                 </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/featured_tourism_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="280dp"
                     android:layout_toRightOf="@+id/feature_background"
-                    android:background="#737678"
-                    />
+                    android:background="#737678" />
 
 
             </RelativeLayout>
