@@ -2,6 +2,9 @@ package com.example.madatour.vue;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.madatour.R;
+import com.example.madatour.modele.Utilisateur;
+import com.example.madatour.service.IWebService;
+import com.example.madatour.service.Server;
 import com.google.android.material.textfield.TextInputLayout;
 
 import android.app.ActivityOptions;
@@ -13,8 +16,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements IWebService {
 
     Button callSignup;
     ImageView image;
@@ -97,7 +101,22 @@ public class HomeActivity extends AppCompatActivity {
         }
         String email = mail.getEditText().getText().toString();
         String passwordval = password.getEditText().getText().toString();
-        Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
-        startActivity(intent);
+        Server server = new Server(this);
+        server.loginWithEmailAndPass(email,passwordval);
+
+
+    }
+
+    @Override
+    public void getResponse(Object responseObject,String errorMessage) {
+//        System.out.println("getResponse");
+        if(responseObject != null){
+            Toast.makeText(this,"Impossible de se connecter, erreur "+errorMessage,Toast.LENGTH_LONG).show();
+            return;
+        }if(responseObject instanceof Utilisateur){
+
+            Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
+            startActivity(intent);
+        }
     }
 }

@@ -1,5 +1,8 @@
 package com.example.madatour.modele;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Utilisateur {
 
     private Integer id;
@@ -15,6 +18,20 @@ public class Utilisateur {
         this.email = email;
         this.login = login;
         this.mdp = mdp;
+    }
+    public static Utilisateur createUserFromJsonObject(JSONObject jsonObject){
+        try {
+            String id = jsonObject.getString("_id");
+            String nom = jsonObject.getString("nom");
+            String prenom = jsonObject.getString("prenom");
+            String email = jsonObject.getString("email");
+            String login = "";
+            String mdp ="";
+            return new Utilisateur( nom,  prenom,  email,  login,  mdp);
+
+        }catch (JSONException e){
+            return null;
+        }
     }
 
     public String getNom() {
