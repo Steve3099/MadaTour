@@ -2,6 +2,7 @@ package com.example.madatour.vue;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.madatour.R;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static int SPLASH_SCREEN_DURATION = 5000;
 
+    SharedPreferences sharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,19 @@ public class MainActivity extends AppCompatActivity {
         image = findViewById(R.id.imageView2);
         image.setAnimation(topanim);
 
+        sharedPrefs = this.getSharedPreferences("APP_MADATOUR",this.MODE_PRIVATE);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent  intent = new Intent(MainActivity.this, HomeActivity.class);
+
+                if(sharedPrefs != null){
+                    if(sharedPrefs.contains("TOKEN") && sharedPrefs.contains("USER_DETAILS")){
+                        intent = new Intent(MainActivity.this, DashboardActivity.class);
+                        startActivity(intent);
+                    }
+                }
 
                 Pair[] pairs= new Pair[1];
                 pairs[0] = new Pair<View,String>(image,"logo_image");

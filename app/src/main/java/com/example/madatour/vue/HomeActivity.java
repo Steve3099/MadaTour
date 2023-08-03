@@ -6,9 +6,11 @@ import com.example.madatour.modele.Utilisateur;
 import com.example.madatour.service.IWebService;
 import com.example.madatour.service.Server;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -108,13 +110,18 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
     }
 
     @Override
-    public void getResponse(Object responseObject,String errorMessage) {
+    public void getResponse(Object responseObject,Object token,String errorMessage) {
 //        System.out.println("getResponse");
-        if(responseObject != null){
+        if(errorMessage != null){
             Toast.makeText(this,"Impossible de se connecter, erreur "+errorMessage,Toast.LENGTH_LONG).show();
             return;
         }if(responseObject instanceof Utilisateur){
+            SharedPreferences preferences = this.getSharedPreferences("APP_MADATOUR",this.MODE_PRIVATE);
+            preferences.edit().putString("TOKEN",(String)token).apply();
 
+            Gson gson = new Gson();
+            String json = gson.toJson((Utilisateur)responseObject);
+            preferences.edit().putString("USER_DETAILS",json).apply();
             Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
             startActivity(intent);
         }

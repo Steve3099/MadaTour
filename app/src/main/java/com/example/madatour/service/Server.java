@@ -18,8 +18,8 @@ import java.net.URL;
 
 public class Server implements IServer{
 
-    public static  String BASE_URL = "https://997d-154-126-56-74.ngrok.io/";
-    public static  String URL_LOGIN = BASE_URL +"utilisateur/login";
+    public static  String BASE_URL = "https://428f-197-149-43-122.ngrok.io";
+    public static  String URL_LOGIN = BASE_URL +"/utilisateur/login";
     Context context;
     private JsonObjectRequest jsonObjectRequest;
     private RequestQueue requestQueue;
@@ -60,15 +60,15 @@ public class Server implements IServer{
                             JSONObject data = response.getJSONObject("data");
                             if(message.equals(CHECK_CODE_OK)){
                                 loogedUtilisateur = Utilisateur.createUserFromJsonObject(data);
-                                ((IWebService)context).getResponse(loogedUtilisateur,null);
+                                ((IWebService)context).getResponse(loogedUtilisateur,token,null);
                             }else{
                                 loogedUtilisateur = null;
-                                ((IWebService)context).getResponse(loogedUtilisateur,message);
+                                ((IWebService)context).getResponse(loogedUtilisateur,null,message);
                             }
 
                         } catch (JSONException e) {
                             loogedUtilisateur = null;
-                            ((IWebService)context).getResponse(loogedUtilisateur,"Connexion impossible, Erreur "+e.toString());
+                            ((IWebService)context).getResponse(loogedUtilisateur,null,"Connexion impossible, Erreur "+e.toString());
 //                            Log.d(TAG,"Connexion impossible");
                         }
 
@@ -79,7 +79,7 @@ public class Server implements IServer{
                     public void onErrorResponse(VolleyError error) {
                         // Handle the error response
                         loogedUtilisateur = null;
-                        ((IWebService)context).getResponse(loogedUtilisateur,"Connexion impossible, Erreur "+error.toString());
+                        ((IWebService)context).getResponse(loogedUtilisateur,null,"Connexion impossible, Erreur "+error.toString());
                     }
                 }
         );
