@@ -144,11 +144,11 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
                             Log.d("TAFIDITRA","Couou");
 
                             String message = response.getString("message");
-                            String token = response.getJSONObject("token").getString("insertedId");
+//                            String token = response.getJSONObject("token").getString("insertedId");
                             JSONObject data = response.getJSONObject("data");
                             if(message.equals(ApiURL.CHECK_CODE_OK)){
                                 loogedUtilisateur = Utilisateur.createUserFromJsonObject(data);
-                                getResponse(loogedUtilisateur,token,null);
+                                getResponse(loogedUtilisateur,"TOKEN",null);
 //                                Redirect to another activity
                                 Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
                                 startActivity(intent);

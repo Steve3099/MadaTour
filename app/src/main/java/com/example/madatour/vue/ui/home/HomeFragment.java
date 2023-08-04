@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,13 +32,12 @@ import com.example.madatour.databinding.FragmentHomeBinding;
 import com.example.madatour.modele.Category;
 import com.example.madatour.modele.Tourism;
 import com.example.madatour.recycler.RecyclerViewInterface;
-import com.example.madatour.service.IWebServiceCateg;
 import com.example.madatour.service.Server;
 import com.example.madatour.service.VolleySingleton;
 import com.example.madatour.util.ApiURL;
 import com.example.madatour.util.CategImgCheck;
 import com.example.madatour.util.SpacesItemDecoration;
-import com.example.madatour.vue.ui.detail.DetailFragment;
+import com.example.madatour.vue.DetailActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +55,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
     RecyclerView featuredCategoryRecycler;
     RecyclerView.Adapter adapter;
     RecyclerView.Adapter adaptercategory;
+
     private Context context;
     List<Category> listCategory;
     List<Tourism> listTourism;
@@ -80,6 +79,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        context = view.getContext();
         requestQueue = VolleySingleton.getmInstance(view.getContext()).getRequestQueue();
         listCategory = new ArrayList<>();
         listTourism = new ArrayList<>();
@@ -271,14 +271,23 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
 
     @Override
     public void onItemClick(int position) {
-//        Intent intent = new Intent()
-        Fragment frag = new DetailFragment();
+        Intent intent = new Intent(context, DetailActivity.class);
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.nav_host_fragment_activity_dashboard, frag);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.addToBackStack(null);
-        ft.commit();
+        Bundle bundle = new Bundle();
+        bundle.putString("tourism_id",listTourism.get(position).getId());
+        bundle.putString("tourism_title",listTourism.get(position).getTitre());
+        bundle.putString("tourism_img",listTourism.get(position).getImage());
+        bundle.putString("tourism_desc",listTourism.get(position).getDescription());
+
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+//        Fragment frag = new DetailFragment();
+//
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.nav_host_fragment_activity_dashboard, frag);
+//        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        ft.addToBackStack(null);
+//        ft.commit();
     }
 
 

@@ -15,7 +15,7 @@
     <string name="title_notifications">Notification</string>
 
 
-<!--    String dashboard-->
+    <!--    String dashboard-->
     <string name="dashboard_logo_name">Voyagez à Madagascar</string>
     <string name="dashboard_decouvrez">Decouvrez Madagascar</string>
     <string name="dashboard_decouvrez_desc">Decouvrez ces monuments,sites touristique,faune et flore</string>
@@ -23,7 +23,6 @@
     <string name="search_text">Recherche...</string>
     <string name="view_all">Voir tout</string>
     <string name="categorie">Catégories</string>
-
 
 
 </resources>
