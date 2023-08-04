@@ -45,7 +45,7 @@ public class TourismAdapter extends RecyclerView.Adapter<TourismAdapter.TourismV
     public void onBindViewHolder(@NonNull TourismViewHolder holder, int position) {
 
         Tourism tourism = listTourism.get(position);
-        holder.image.setImageResource(tourism.getImage());
+        holder.image.setImageResource(Integer.parseInt(Integer.valueOf(tourism.getImage()).toString()));
         holder.title.setText(tourism.getTitre());
         holder.desc.setText(tourism.getDescription());
     }
