@@ -1,10 +1,18 @@
 package com.example.madatour.vue;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.madatour.R;
 import com.example.madatour.modele.Utilisateur;
 import com.example.madatour.service.IWebService;
 import com.example.madatour.service.Server;
+import com.example.madatour.service.VolleySingleton;
+import com.example.madatour.util.ApiURL;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -12,6 +20,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,12 +29,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class HomeActivity extends AppCompatActivity implements IWebService {
 
     Button callSignup;
     ImageView image;
     TextView logoText,sloganText;
     TextInputLayout mail,password;
+    Utilisateur loogedUtilisateur;
+
+    RequestQueue requestQueue;
 
     Button login_btn;
     @Override
@@ -37,6 +52,7 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
             getSupportActionBar().hide();
         }
         setContentView(R.layout.activity_home);
+        requestQueue = VolleySingleton.getmInstance(this).getRequestQueue();
 
         // Hook
         callSignup = findViewById(R.id.signup_screen);
@@ -103,10 +119,63 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
         }
         String email = mail.getEditText().getText().toString();
         String passwordval = password.getEditText().getText().toString();
-        Server server = new Server(this);
-        server.loginWithEmailAndPass(email,passwordval);
+        fectcUserFromBackend(email,passwordval);
 
 
+
+    }
+    private void fectcUserFromBackend(String email,String pass){
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("login", email);
+            postData.put("mdp", pass);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+//        requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST, ApiURL.URL_LOGIN, postData,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Handle the successful response
+                        try {
+                            Log.d("TAFIDITRA","Couou");
+
+                            String message = response.getString("message");
+                            String token = response.getJSONObject("token").getString("insertedId");
+                            JSONObject data = response.getJSONObject("data");
+                            if(message.equals(ApiURL.CHECK_CODE_OK)){
+                                loogedUtilisateur = Utilisateur.createUserFromJsonObject(data);
+                                getResponse(loogedUtilisateur,token,null);
+//                                Redirect to another activity
+                                Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
+                                startActivity(intent);
+
+                            }else{
+                                loogedUtilisateur = null;
+                                getResponse(loogedUtilisateur,null,message);
+                            }
+
+                        } catch (JSONException e) {
+                            loogedUtilisateur = null;
+                            getResponse(loogedUtilisateur,null,"Connexion impossible, Erreur "+e.toString());
+                            Log.d("API_ERROR ","Connexion impossible");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle the error response
+                        loogedUtilisateur = null;
+                        getResponse(loogedUtilisateur,null,"Connexion impossible, Erreur "+error.toString());
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
     }
 
     @Override

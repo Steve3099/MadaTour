@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 Intent  intent = new Intent(MainActivity.this, HomeActivity.class);
 
+                //Check if token exist before and userdetails
                 if(sharedPrefs != null){
                     if(sharedPrefs.contains("TOKEN") && sharedPrefs.contains("USER_DETAILS")){
                         intent = new Intent(MainActivity.this, DashboardActivity.class);

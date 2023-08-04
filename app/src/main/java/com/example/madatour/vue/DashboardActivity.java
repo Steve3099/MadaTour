@@ -1,17 +1,23 @@
 package com.example.madatour.vue;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.WindowManager;
-
-import com.example.madatour.R;
-import com.example.madatour.databinding.ActivityDashboardBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.madatour.R;
+import com.example.madatour.databinding.ActivityDashboardBinding;
+import com.example.madatour.service.IServer;
+import com.example.madatour.service.IWebServiceCateg;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.List;
 
 
 public class DashboardActivity extends AppCompatActivity {
@@ -40,5 +46,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
+
 
 }
