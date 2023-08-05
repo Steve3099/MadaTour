@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.madatour.R;
 import com.example.madatour.controler.DetailsFragmentAdapter;
@@ -16,6 +18,7 @@ public class DetailActivity extends AppCompatActivity {
     ViewPager2 viewPager2;
     TabLayout tabLayout;
 
+    ImageView backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +27,23 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         // Hook
+
+
+        initializeHook();
+        tablayoutRedirect();
+        backButton();
+    }
+
+    public void initializeHook(){
         viewPager2 = findViewById(R.id.viewPagerDetails);
         tabLayout = findViewById(R.id.tablayoutDetails);
-        viewPager2.setAdapter(new DetailsFragmentAdapter(this));
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.blue_logo));
+        viewPager2.setAdapter(new DetailsFragmentAdapter(this));
+        backButton = findViewById(R.id.imageViewBackButton);
+    }
+
+    public void tablayoutRedirect(){
+
         TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2,
                 new TabLayoutMediator.TabConfigurationStrategy() {
                     @Override
@@ -50,4 +66,11 @@ public class DetailActivity extends AppCompatActivity {
                 });
         tabLayoutMediator.attach();
     }
+    public void backButton(){
+        backButton.setOnClickListener(view -> {
+          finish();
+        });
+    }
+
+
 }
