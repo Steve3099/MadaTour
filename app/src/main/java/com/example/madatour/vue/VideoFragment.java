@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.madatour.R;
 
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link VideoFragment#newInstance} factory method to
@@ -21,6 +23,8 @@ public class VideoFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    public List<String> video;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,5 +66,13 @@ public class VideoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_video, container, false);
+    }
+
+    public List<String> getVideo() {
+        return video;
+    }
+
+    public void setVideo(List<String> video) {
+        this.video = video;
     }
 }

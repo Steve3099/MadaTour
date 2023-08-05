@@ -11,11 +11,18 @@ import com.example.madatour.vue.DescriptionFragment;
 import com.example.madatour.vue.ImageFragment;
 import com.example.madatour.vue.VideoFragment;
 
+import java.util.List;
+
 public class DetailsFragmentAdapter extends FragmentStateAdapter {
 
-
-    public DetailsFragmentAdapter(@NonNull FragmentActivity fragmentActivity) {
+    String description;
+    List<String> img;
+    List<String> video;
+    public DetailsFragmentAdapter(@NonNull FragmentActivity fragmentActivity,String description,List<String> img,List<String> video) {
         super(fragmentActivity);
+        this.description = description;
+        this.img = img;
+        this.video = video;
     }
 
     @NonNull
@@ -23,7 +30,9 @@ public class DetailsFragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new  DescriptionFragment();
+                DescriptionFragment descriptionFragment = new DescriptionFragment();
+                descriptionFragment.setDescprition(description);
+                return descriptionFragment;
             case 1:
                 return new VideoFragment();
             default:

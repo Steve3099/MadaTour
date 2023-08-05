@@ -278,6 +278,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         bundle.putString("tourism_title",listTourism.get(position).getTitre());
         bundle.putString("tourism_img",listTourism.get(position).getImage());
         bundle.putString("tourism_desc",listTourism.get(position).getDescription());
+        bundle.putString("tourism_categ",listTourism.get(position).getCategorie());
 
         intent.putExtras(bundle);
         context.startActivity(intent);

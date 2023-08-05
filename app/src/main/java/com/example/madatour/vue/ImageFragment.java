@@ -12,10 +12,12 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.madatour.R;
 
+import java.util.List;
+
 
 public class ImageFragment extends Fragment {
 
-
+    List<String> img;
 
     @Override
     public View onCreateView(
@@ -39,5 +41,11 @@ public class ImageFragment extends Fragment {
 
     }
 
+    public List<String> getImg() {
+        return img;
+    }
 
+    public void setImg(List<String> img) {
+        this.img = img;
+    }
 }

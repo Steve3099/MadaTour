@@ -3,9 +3,10 @@ package com.example.madatour.modele;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Tourism {
+public class Tourism implements Serializable {
     String id,titre,description,categorie,mindesc;
     String image;
 
