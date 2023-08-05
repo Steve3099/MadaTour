@@ -31,7 +31,7 @@
             android:name=".vue.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".vue.SecondFragment$HomeActivity"
+            android:name=".vue.ImageFragment$HomeActivity"
             android:exported="false" />
         <activity
             android:name=".vue.MainActivity"

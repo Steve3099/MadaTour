@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.madatour.R;
+
 import com.example.madatour.databinding.ActivityDashboardBinding;
 import com.example.madatour.service.IServer;
 import com.example.madatour.service.IWebServiceCateg;
@@ -42,9 +43,9 @@ public class DashboardActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_dashboard);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+//        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
 

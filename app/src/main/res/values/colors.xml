@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#1EBBD7</color>
+    <color name="blue_logo">#1EBBD7</color>
 
 <!-- Dashboard colors-->
     <color name="home_background">#F2F5F8</color>

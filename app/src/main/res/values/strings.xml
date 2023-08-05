@@ -23,6 +23,8 @@
     <string name="search_text">Recherche...</string>
     <string name="view_all">Voir tout</string>
     <string name="categorie">Catégories</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
