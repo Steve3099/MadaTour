@@ -35,7 +35,7 @@ public class ImageFragment extends Fragment {
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
         viewModel.fetchDataFromApi();
 //
 ;

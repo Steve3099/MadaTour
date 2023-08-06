@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MadaTour</string>
+    <string name="app_name">E-vahiny</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -10,8 +10,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Profile</string>
+    <string name="title_home">Accueil</string>
+    <string name="title_dashboard">aramètres</string>
     <string name="title_notifications">Notification</string>
 
 
