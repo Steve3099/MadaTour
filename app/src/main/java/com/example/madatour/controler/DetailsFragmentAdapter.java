@@ -34,9 +34,13 @@ public class DetailsFragmentAdapter extends FragmentStateAdapter {
                 descriptionFragment.setDescprition(description);
                 return descriptionFragment;
             case 1:
-                return new VideoFragment();
+                ImageFragment imageFragment = new ImageFragment();
+//                imageFragment.setImg(img);
+                return imageFragment;
             default:
-                return new ImageFragment();
+                VideoFragment videoFragment = new VideoFragment();
+//                videoFragment.setVideo(video);
+                return videoFragment;
         }
 
     }

@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".vue.ImageFragment"
-    android:orientation="vertical">
-    <ScrollView
+    android:orientation="vertical"
+
+    android:minHeight="500dp"
+    >
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -16,25 +19,16 @@
             android:orientation="vertical"
             android:layout_marginTop="30dp"
             >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/details_image_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Ceci contient l'image"
-                    android:textSize="20sp"
-
-                    android:layout_centerHorizontal="true"
-                    android:textColor="#000"
-                    />
+                    android:layout_height="350dp" />
 
 
-            </RelativeLayout>
+
 
         </LinearLayout>
 
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

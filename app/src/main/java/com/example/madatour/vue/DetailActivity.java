@@ -2,16 +2,22 @@ package com.example.madatour.vue;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.madatour.R;
+import com.example.madatour.controler.DetailImageAdapter;
 import com.example.madatour.controler.DetailsFragmentAdapter;
 import com.example.madatour.modele.Tourism;
+import com.example.madatour.vue.ui.detail.DetailViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -30,6 +36,8 @@ public class DetailActivity extends AppCompatActivity {
 
     List<String> fetchedImage;
     List<String> fetchedVideo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +48,15 @@ public class DetailActivity extends AppCompatActivity {
         // Hook
         fetchedImage = new ArrayList<>();
         fetchedVideo = new ArrayList<>();
+
+        //----------------------------------
+
         dataFromDashboardActiviy();
         initializeHook();
         tablayoutRedirect();
         backButton();
         poster_image.setImageResource(Integer.valueOf(tourim.getImage()));
         detailtitle.setText(tourim.getTitre());
-
     }
 
     public void initializeHook(){
@@ -71,12 +81,12 @@ public class DetailActivity extends AppCompatActivity {
                                 tab.setIcon(getResources().getDrawable(R.drawable.baseline_description_24));
                                 break;
                             case 1:
-                                tab.setText("Video");
-                                tab.setIcon(getResources().getDrawable(R.drawable.baseline_video_library_24));
-                                break;
-                            case 2:
                                 tab.setText("Image");
                                 tab.setIcon(getResources().getDrawable(R.drawable.baseline_image_24));
+                                break;
+                            case 2:
+                                tab.setText("Video");
+                                tab.setIcon(getResources().getDrawable(R.drawable.baseline_video_library_24));
                                 break;
                         }
                     }
