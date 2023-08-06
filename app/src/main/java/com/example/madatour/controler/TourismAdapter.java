@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.madatour.R;
 import com.example.madatour.modele.Tourism;
 import com.example.madatour.recycler.RecyclerViewInterface;
@@ -22,15 +23,19 @@ public class TourismAdapter extends RecyclerView.Adapter<TourismAdapter.TourismV
     private final RecyclerViewInterface recyclerViewInterface;
 
     ArrayList<Tourism> listTourism;
+    private Context context;
 
-//    public TourismAdapter(ArrayList<Tourism> listTourism) {
-//        this.listTourism = listTourism;
-//    }
+
 
 
     public TourismAdapter(RecyclerViewInterface recyclerViewInterface,  ArrayList<Tourism> listTourism) {
         this.recyclerViewInterface = recyclerViewInterface;
         this.listTourism = listTourism;
+    }
+    public TourismAdapter(RecyclerViewInterface recyclerViewInterface,  ArrayList<Tourism> listTourism,Context context) {
+        this.recyclerViewInterface = recyclerViewInterface;
+        this.listTourism = listTourism;
+        this.context = context;
     }
 
     @NonNull
@@ -45,9 +50,11 @@ public class TourismAdapter extends RecyclerView.Adapter<TourismAdapter.TourismV
     public void onBindViewHolder(@NonNull TourismViewHolder holder, int position) {
 
         Tourism tourism = listTourism.get(position);
-        holder.image.setImageResource(Integer.parseInt(Integer.valueOf(tourism.getImage()).toString()));
+
         holder.title.setText(tourism.getTitre());
-        holder.desc.setText(tourism.getDescription());
+        holder.desc.setText(tourism.getMindesc());
+//        holder.image.setImageResource(Integer.parseInt(Integer.valueOf(tourism.getImage()).toString()));
+        Glide.with(context).load(tourism.getImage()).into(holder.image);
     }
 
 

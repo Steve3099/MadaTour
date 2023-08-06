@@ -17,6 +17,8 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
 
     private List<String> data = new ArrayList<>();
 
+
+
     public void setData(List<String> newData) {
         data.clear();
         data.addAll(newData);

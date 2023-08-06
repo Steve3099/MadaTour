@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.madatour.R;
 import com.example.madatour.controler.DetailImageAdapter;
 import com.example.madatour.controler.DetailsFragmentAdapter;
@@ -57,7 +58,8 @@ public class DetailActivity extends AppCompatActivity {
         initializeHook();
         tablayoutRedirect();
         backButton();
-        poster_image.setImageResource(Integer.valueOf(tourim.getImage()));
+//        poster_image.setImageResource(Integer.valueOf(tourim.getImage()));
+        Glide.with(this).load(tourim.getImage()).into(poster_image);
         detailtitle.setText(tourim.getTitre());
     }
 

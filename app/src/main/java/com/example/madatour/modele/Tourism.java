@@ -25,9 +25,9 @@ public class Tourism implements Serializable {
             String categorie = jsonObject.getString("categorie");
             String titre = jsonObject.getString("titre");
             String description = jsonObject.getString("description");
-//            String image = jsonObject.getString("image");
+            String image = jsonObject.getString("image");
 
-            return new Tourism( id,  titre,  description, "",  categorie);
+            return new Tourism( id,  titre,  description, image,  categorie);
 
         } catch (JSONException e) {
             return null;

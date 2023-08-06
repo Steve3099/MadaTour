@@ -126,17 +126,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         SpacesItemDecoration decoration = new SpacesItemDecoration(20);
         featuredTourismRecycler.addItemDecoration(decoration);
     }
-//    private void featuredCategoryRecycler() {
-//        featuredCategoryRecycler.setHasFixedSize(true);
-//        featuredCategoryRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-//        ArrayList<Category> listCategory = new ArrayList<>();
-//        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
-//        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
-//        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
-//
-//        adaptercategory = new CategoryAdapter(listCategory);
-//        featuredCategoryRecycler.setAdapter(adaptercategory);
-//    }
+
 
      /*
       Not work
@@ -223,7 +213,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
                                     for(int i = 0; i<data.length();i++){
 
                                         Tourism t = Tourism.createTourismFromJsonObject(data.getJSONObject(i));
-                                        t.setImage(Integer.toString( R.drawable.lemurs));
+
                                         listTourism.add(t);
                                     }
                                 }
@@ -233,7 +223,7 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
 
 //                                ((IWebServiceCateg)context).getResponseCateg(null,"Error in json response",context);
                             }
-                            adapter = new TourismAdapter(interfaceview, (ArrayList<Tourism>) listTourism);
+                            adapter = new TourismAdapter(interfaceview, (ArrayList<Tourism>) listTourism,context);
                             featuredTourismRecycler.setAdapter(adapter);
 //        Add space in first list
                             SpacesItemDecoration decoration = new SpacesItemDecoration(20);
