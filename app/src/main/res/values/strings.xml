@@ -17,7 +17,7 @@
 
     <!--    String dashboard-->
     <string name="dashboard_logo_name">Voyagez à Madagascar</string>
-    <string name="dashboard_decouvrez">Decouvrez Madagascar</string>
+    <string name="dashboard_decouvrez">Decouvrez Madagascar avec ses activités</string>
     <string name="dashboard_decouvrez_desc">Decouvrez ces monuments,sites touristique,faune et flore</string>
     <string name="dashboard_views">Les plus populaires</string>
     <string name="search_text">Recherche...</string>
