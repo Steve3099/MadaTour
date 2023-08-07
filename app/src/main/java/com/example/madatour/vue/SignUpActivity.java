@@ -1,24 +1,36 @@
 package com.example.madatour.vue;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.madatour.R;
+import com.example.madatour.viewmodel.ViewModelInscription;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
 
 
     Button callLogin;
     TextInputLayout regNom,regPrenom,regEmail,regPassword,regConfirmPassword;
+
+    private ProgressBar loader;
+
+    ViewModelInscription viewModel;
+
+    boolean isSubscribed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_sign_up);
 
+         viewModel = new ViewModelProvider(this).get(ViewModelInscription.class);
         // Hook
         callLogin = findViewById(R.id.call_login);
         regNom = findViewById(R.id.fullname);
@@ -37,11 +50,17 @@ public class SignUpActivity extends AppCompatActivity {
         regEmail = findViewById(R.id.mail);
         regPassword = findViewById(R.id.password);
         regConfirmPassword = findViewById(R.id.confirm_password);
+        loader = findViewById(R.id.loader);
+
         callLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
+
+
+                    Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
                 startActivity(intent);
+
+//
             }
         });
     }
@@ -122,6 +141,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
     public void registerUser(View view){
+
         if(!validateNom() | !validatePrenom() | !validateEmail() | !validatePassword()) {
             return;
         }
@@ -130,6 +150,33 @@ public class SignUpActivity extends AppCompatActivity {
         String email = regEmail.getEditText().getText().toString();
         String password = regPassword.getEditText().getText().toString();
         String confirmpass = regConfirmPassword.getEditText().getText().toString();
+
+        viewModel.isLoading().observe(this, isLoading -> {
+            if (isLoading) {
+                loader.setVisibility(View.VISIBLE); // Show the loader
+            } else {
+                loader.setVisibility(View.GONE); // Hide the loader
+            }
+        });
+        viewModel.signupUserAPi(nom,prenom,email,password);
+
+        viewModel.getApiResponse().observe(this, response -> {
+            if (response == null) {
+                isSubscribed = true;
+                Toast.makeText(this,"Inscription réussie  ",Toast.LENGTH_LONG).show();
+                new Handler().postDelayed(() -> {
+                    // Create an Intent to start the target activity
+                    Intent intent = new Intent(SignUpActivity.this,HomeActivity.class);
+                    startActivity(intent);
+
+                    // Finish the current activity to prevent going back to it
+                    finish();
+                }, 2000); // 2000 milliseconds (1 second) delay
+
+            } else {
+                Toast.makeText(this,"Impossible de se d'effectuer l'operation, je réessaye  "+response,Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 }
