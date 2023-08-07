@@ -48,7 +48,7 @@ public class ImageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ////        ---------------------------------
         recyclerViewImage =view.findViewById(R.id.details_image_list);
-        detailsFragmentAdapter = new DetailImageAdapter();
+        detailsFragmentAdapter = new DetailImageAdapter(view.getContext());
 //
         recyclerViewImage.setHasFixedSize(true);
         recyclerViewImage.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));

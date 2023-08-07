@@ -1,5 +1,6 @@
 package com.example.madatour.controler;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.madatour.R;
 
 import java.util.ArrayList;
@@ -17,7 +19,11 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
 
     private List<String> data = new ArrayList<>();
 
+    Context context;
 
+    public DetailImageAdapter(Context context) {
+        this.context = context;
+    }
 
     public void setData(List<String> newData) {
         data.clear();
@@ -39,6 +45,7 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
         String onedata = data.get(position);
         String item = data.get(position);
         holder.imageView.setImageResource(Integer.valueOf(onedata));
+        Glide.with(context).load(onedata).into(holder.imageView);
     }
 
     @Override

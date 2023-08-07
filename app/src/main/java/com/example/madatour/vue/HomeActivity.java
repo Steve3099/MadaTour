@@ -136,6 +136,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     }
     private void fectcUserFromBackend(String email,String pass){
+
         viewModel.isLoading().observe(this, isLoading -> {
             if (isLoading) {
                 loader.setVisibility(View.VISIBLE); // Show the loader

@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,8 +36,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ViewModelDashboard extends ViewModel {
 
@@ -197,4 +202,79 @@ public class ViewModelDashboard extends ViewModel {
 
         return utilisateur;
     }
+
+    public void searchTourism(String texte, RequestQueue requestQueue, RecyclerViewInterface interfaceview) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("texte", texte);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        List<Tourism> listTourism = new ArrayList<>();
+        String bindData= null;
+        try {
+            bindData = "?texte="+ URLEncoder.encode(texte, "UTF-8");
+            Log.d("API data ", bindData);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET, ApiURL.URL_TOURISM_SEARCH+bindData, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Handle the successful response
+                        Log.d("TAFIDITRA", "Couou");
+                        try {
+                            String message = response.getString("message");
+                            JSONArray data = response.getJSONArray("tourismes");
+                            if (message.equals(ApiURL.CHECK_CODE_OK)) {
+                                if (data.length() > 0) {
+                                    for (int i = 0; i < data.length(); i++) {
+                                        Tourism t = Tourism.createTourismFromJsonObject(data.getJSONObject(i));
+                                        listTourism.add(t);
+                                    }
+                                    Log.d("API search ", String.valueOf(listTourism.size()));
+                                    tourismListLiveData.setValue(listTourism);
+                                    errorTourism.setValue(null);
+                                } else {
+                                    tourismListLiveData.setValue(null);
+                                    errorTourism.setValue("Pas d'activités touristiques en vue");
+                                }
+                            } else {
+                                tourismListLiveData.setValue(null);
+                                errorTourism.setValue("Tourisme API checkcode NOT OK");
+                            }
+                        } catch (JSONException e) {
+                            tourismListLiveData.setValue(null);
+                            errorTourism.setValue("Tourisme API JSON exception" + e.getMessage());
+                            Log.d("Tonga fa json exception", "Connexion impossible" + e.toString());
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        tourismListLiveData.setValue(null);
+                        errorTourism.setValue("Tourisme API JSON exception" + error.getMessage());
+                        Log.d("API response tourism error", "API response error " + error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", texte);
+                return params;
+            }
+        };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(socketTimeout, maxRetries, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        requestQueue.add(jsonObjectRequest);
+    }
+
 }

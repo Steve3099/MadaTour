@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -66,6 +68,8 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
     ViewModelDashboard homeViewModel;
 
     TextView username;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -101,7 +105,8 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         // Hook for recycler view
         featuredTourismRecycler = view.findViewById(R.id.featured_tourism_recycler);
         featuredCategoryRecycler = view.findViewById(R.id.featured_category);
-
+        SearchView searchView = view.findViewById(R.id.searchview);
+        RecyclerViewInterface interfaceview =this ;
 
         // Category recycler
         featuredCategoryRecycler.setHasFixedSize(true);
@@ -120,8 +125,45 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         featuredTourismRecycler.addItemDecoration(decoration);
 
         featuredCategoryRecyclerV1();
-
+//        ------------------------
         featuredTourismRecyclerV1();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Trigger search when submit button is pressed
+                homeViewModel.searchTourism( query,requestQueue, interfaceview);
+                homeViewModel.  getTourismListLiveData().observe(getViewLifecycleOwner(), data -> {
+                    homeViewModel.getErrorTourism().observe(getViewLifecycleOwner(),errorCategory ->{
+                        if(data !=null){
+                            ((TourismAdapter)adapter).setData(data);
+                        }else{
+                            Toast.makeText(getActivity(),"Erreur getting Category " +errorCategory, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Trigger search as text changes
+                homeViewModel.searchTourism(newText,requestQueue, interfaceview);
+                homeViewModel.  getTourismListLiveData().observe(getViewLifecycleOwner(), data -> {
+                    homeViewModel.getErrorTourism().observe(getViewLifecycleOwner(),errorCategory ->{
+                        if(data !=null){
+                            ((TourismAdapter)adapter).setData(data);
+                        }else{
+                            Toast.makeText(getActivity(),"Erreur getting Category " +errorCategory, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                });
+                return true;
+            }
+        });
+
+
+// ------------------------
 
     }
 
