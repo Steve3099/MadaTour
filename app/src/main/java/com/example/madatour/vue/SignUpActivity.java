@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.madatour.R;
+import com.example.madatour.viewmodel.ViewModelFactorySignUP;
 import com.example.madatour.viewmodel.ViewModelInscription;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_sign_up);
 
-         viewModel = new ViewModelProvider(this).get(ViewModelInscription.class);
+         viewModel = new ViewModelProvider(this,new ViewModelFactorySignUP(this)).get(ViewModelInscription.class);
         // Hook
         callLogin = findViewById(R.id.call_login);
         regNom = findViewById(R.id.fullname);
@@ -171,7 +172,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     // Finish the current activity to prevent going back to it
                     finish();
-                }, 2000); // 2000 milliseconds (1 second) delay
+                }, 1000); // 2000 milliseconds (1 second) delay
 
             } else {
                 Toast.makeText(this,"Impossible de se d'effectuer l'operation, je réessaye  "+response,Toast.LENGTH_LONG).show();

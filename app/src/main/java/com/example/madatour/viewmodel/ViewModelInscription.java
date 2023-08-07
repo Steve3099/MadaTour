@@ -32,6 +32,11 @@ public class ViewModelInscription extends ViewModel {
 
    public static int socketTimeout = 7000; // 7 seconds timeout
     public static int maxRetries = 3;
+
+    public ViewModelInscription(Context context) {
+        this.context = context;
+    }
+
     public LiveData<String> getApiResponse() {
         return apiResponse;
     }

@@ -1,6 +1,7 @@
 package com.example.madatour.vue;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +14,8 @@ import com.example.madatour.service.IWebService;
 import com.example.madatour.service.Server;
 import com.example.madatour.service.VolleySingleton;
 import com.example.madatour.util.ApiURL;
+import com.example.madatour.viewmodel.ViewModelFactoryLogin;
+import com.example.madatour.viewmodel.ViewModelLogin;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
@@ -20,19 +23,21 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class HomeActivity extends AppCompatActivity implements IWebService {
+public class HomeActivity extends AppCompatActivity  {
 
     Button callSignup;
     ImageView image;
@@ -43,6 +48,10 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
     RequestQueue requestQueue;
 
     Button login_btn;
+
+    private ViewModelLogin viewModel;
+
+    private ProgressBar loader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +61,8 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
             getSupportActionBar().hide();
         }
         setContentView(R.layout.activity_home);
-        requestQueue = VolleySingleton.getmInstance(this).getRequestQueue();
+        viewModel = new ViewModelProvider(this, new ViewModelFactoryLogin(this)).get(ViewModelLogin.class);
+
 
         // Hook
         callSignup = findViewById(R.id.signup_screen);
@@ -62,6 +72,7 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
         mail = findViewById(R.id.username);
         password = findViewById(R.id.password);
         login_btn = findViewById(R.id.login_btn);
+        loader = findViewById(R.id.loader_login);
 
 
         callSignup.setOnClickListener(new View.OnClickListener() {
@@ -125,60 +136,26 @@ public class HomeActivity extends AppCompatActivity implements IWebService {
 
     }
     private void fectcUserFromBackend(String email,String pass){
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("login", email);
-            postData.put("mdp", pass);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        viewModel.isLoading().observe(this, isLoading -> {
+            if (isLoading) {
+                loader.setVisibility(View.VISIBLE); // Show the loader
+            } else {
+                loader.setVisibility(View.GONE); // Hide the loader
+            }
+        });
+        viewModel.loginUser(email,pass);
 
-//        requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST, ApiURL.URL_LOGIN, postData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Handle the successful response
-                        try {
-                            Log.d("TAFIDITRA","Couou");
+        viewModel.getLoggedUser().observe(this, response -> {
 
-                            String message = response.getString("message");
-//                            String token = response.getJSONObject("token").getString("insertedId");
-                            JSONObject data = response.getJSONObject("data");
-                            if(message.equals(ApiURL.CHECK_CODE_OK)){
-                                loogedUtilisateur = Utilisateur.createUserFromJsonObject(data);
-                                getResponse(loogedUtilisateur,"TOKEN",null);
-//                                Redirect to another activity
-                                Intent  intent = new Intent(HomeActivity.this, DashboardActivity.class);
-                                startActivity(intent);
+            viewModel.getErrorMessage().observe(this,errormessage ->{
+                getResponse(response,"FEVE678979",errormessage);
+            });
 
-                            }else{
-                                loogedUtilisateur = null;
-                                getResponse(loogedUtilisateur,null,message);
-                            }
 
-                        } catch (JSONException e) {
-                            loogedUtilisateur = null;
-                            getResponse(loogedUtilisateur,null,"Connexion impossible, Erreur "+e.toString());
-                            Log.d("API_ERROR ","Connexion impossible");
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle the error response
-                        loogedUtilisateur = null;
-                        getResponse(loogedUtilisateur,null,"Connexion impossible, Erreur "+error.toString());
-                    }
-                }
-        );
-        requestQueue.add(jsonObjectRequest);
+        });
     }
 
-    @Override
+
     public void getResponse(Object responseObject,Object token,String errorMessage) {
 //        System.out.println("getResponse");
         if(errorMessage != null){
