@@ -90,7 +90,7 @@ public class DetailViewModel  extends ViewModel {
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("tourimseID", "64d0fb0a108037b6a6e0215f");
+            postData.put("tourimseID", idTourisme);
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

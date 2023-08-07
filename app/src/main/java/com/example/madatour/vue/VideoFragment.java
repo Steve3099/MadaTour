@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.android.volley.RequestQueue;
 import com.example.madatour.R;
+import com.example.madatour.service.VolleySingleton;
 import com.example.madatour.vue.ui.detail.DetailViewModel;
 
 import java.util.List;
@@ -39,6 +42,7 @@ public class VideoFragment extends Fragment {
     private String mParam2;
     private DetailViewModel viewModel;
     private WebView webView;
+    RequestQueue requestQueue;
     // web view code
     private final String VideoEmbededAdress = "<iframe width=\"400\" height=\"225\" src=\"https://www.youtube.com/embed/th9WMMJuOFU?&autoplay=1\" title=\"YouTube video player\" frameborder=\"0\" allow=\"autoplay;\" allowfullscreen></iframe>";
     private final String mimeType = "text/html";
@@ -86,7 +90,7 @@ public class VideoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         webView = view.findViewById(R.id.details_webView);
-        viewModel.fechtVideoURlFromApi();
+        requestQueue = VolleySingleton.getmInstance(view.getContext()).getRequestQueue();
         String videoId = viewModel.getYoutubeVideoId();
 //        -----------------------------
         webView.getSettings().setJavaScriptEnabled(true);
@@ -118,4 +122,5 @@ public class VideoFragment extends Fragment {
     public void setVideo(List<String> video) {
         this.video = video;
     }
+
 }
