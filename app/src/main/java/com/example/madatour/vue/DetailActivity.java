@@ -19,6 +19,9 @@ import com.example.madatour.R;
 import com.example.madatour.controler.DetailImageAdapter;
 import com.example.madatour.controler.DetailsFragmentAdapter;
 import com.example.madatour.modele.Tourism;
+import com.example.madatour.viewmodel.ViewModelFactoryDetail;
+import com.example.madatour.viewmodel.ViewModelFactoryLogin;
+import com.example.madatour.viewmodel.ViewModelLogin;
 import com.example.madatour.vue.ui.detail.DetailViewModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -58,6 +61,7 @@ public class DetailActivity extends AppCompatActivity {
         initializeHook();
         tablayoutRedirect();
         backButton();
+        DetailViewModel viewModel =  new ViewModelProvider(this, new ViewModelFactoryDetail(tourim.getId())).get(DetailViewModel.class);
 //        poster_image.setImageResource(Integer.valueOf(tourim.getImage()));
         Glide.with(this).load(tourim.getImage()).into(poster_image);
         detailtitle.setText(tourim.getTitre());

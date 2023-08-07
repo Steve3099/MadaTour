@@ -37,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // Hide navigation bar
+        // Hide navigation barr
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }

@@ -8,5 +8,6 @@ public class ApiURL {
 
     public static  String URL_TOURISM_ALL = BASE_URL +"/tourisme/all";
     public static  String URL_TOURISM_SEARCH = BASE_URL +"/tourisme/byTexte";
+    public static  String URL_TOURISM_BY_ID = BASE_URL +"/tourisme/byID";
     public static final String CHECK_CODE_OK = "mety";
 }

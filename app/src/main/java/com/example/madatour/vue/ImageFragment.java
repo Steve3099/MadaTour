@@ -1,6 +1,7 @@
 package com.example.madatour.vue;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.android.volley.RequestQueue;
 import com.example.madatour.R;
 import com.example.madatour.controler.DetailImageAdapter;
+import com.example.madatour.service.VolleySingleton;
 import com.example.madatour.vue.ui.detail.DetailViewModel;
 
 import java.util.List;
@@ -30,13 +33,15 @@ public class ImageFragment extends Fragment {
     private DetailImageAdapter detailsFragmentAdapter;
 
     private RecyclerView recyclerViewImage;
+
+    RequestQueue requestQueue;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
         viewModel = new ViewModelProvider(requireActivity()).get(DetailViewModel.class);
-        viewModel.fetchDataFromApi();
+//        viewModel.fetchDataFromApi();
 //
 ;
 
@@ -47,16 +52,20 @@ public class ImageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ////        ---------------------------------
+
         recyclerViewImage =view.findViewById(R.id.details_image_list);
         detailsFragmentAdapter = new DetailImageAdapter(view.getContext());
-//
+       requestQueue = VolleySingleton.getmInstance(view.getContext()).getRequestQueue();
+
+
         recyclerViewImage.setHasFixedSize(true);
         recyclerViewImage.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         recyclerViewImage.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerViewImage.setAdapter(detailsFragmentAdapter);
-        viewModel.getApiResponse().observe(getViewLifecycleOwner(), data -> {
-            detailsFragmentAdapter.setData(data); // Update adapter data when API response changes
-        });
+//        viewModel.getApiResponse().observe(getViewLifecycleOwner(), data -> {
+//            detailsFragmentAdapter.setData(data); // Update adapter data when API response changes
+//        });
+        requestDataFromApi();
 
     }
 
@@ -72,5 +81,22 @@ public class ImageFragment extends Fragment {
 
     public void setImg(List<String> img) {
         this.img = img;
+    }
+
+    public void requestDataFromApi(){
+        viewModel.fetchDataGlobal(requestQueue);
+        viewModel.getApiImage().observe(getViewLifecycleOwner(), response -> {
+
+            viewModel.getErrorResponse().observe(getViewLifecycleOwner(),error ->{
+                if(response !=null){
+                    detailsFragmentAdapter.setData(response);
+
+                }
+                if(error != null){
+                    Log.d("TAFAVOAKa",error);
+                }
+            });
+
+        });
     }
 }

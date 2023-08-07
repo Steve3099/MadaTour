@@ -44,7 +44,7 @@ public class DetailImageAdapter extends RecyclerView.Adapter<DetailImageAdapter.
     public void onBindViewHolder(@NonNull DetailImageViewHolder holder, int position) {
         String onedata = data.get(position);
         String item = data.get(position);
-        holder.imageView.setImageResource(Integer.valueOf(onedata));
+
         Glide.with(context).load(onedata).into(holder.imageView);
     }
 
