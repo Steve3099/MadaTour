@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="Settings"
+            android:text="Paramètres"
             android:textSize="24sp"
             android:textStyle="bold"
             android:layout_gravity="center_vertical"
@@ -39,7 +39,7 @@
         android:id="@+id/notificationSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enable Notifications"
+        android:text="Activer les notifications"
         android:checked="true"/>
 
     <SeekBar
@@ -68,14 +68,14 @@
             android:id="@+id/lightThemeRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Light Theme"
+            android:text="Thème du jour"
             android:checked="true"/>
 
         <RadioButton
             android:id="@+id/darkThemeRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dark Theme"/>
+            android:text="Thème de nuit"/>
 
     </RadioGroup>
 
