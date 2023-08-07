@@ -33,6 +33,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:268594332674:android:33afb276cdcc4dad67d31b",
+        "android_client_info": {
+          "package_name": "com.example.madatour"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "268594332674-8rcjkn0mfr41gpk8d3qndb2e53ig4lhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeJy3evUu7FVlgNe_yopONNl1kq9rb99M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "268594332674-8rcjkn0mfr41gpk8d3qndb2e53ig4lhh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
