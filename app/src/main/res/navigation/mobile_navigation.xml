@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.madatour.vue.ui.profile.ProfileFragment"
+        android:name="com.example.madatour.vue.ui.profile.ParametreFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_parametre" />
 
     <fragment
         android:id="@+id/navigation_notifications"

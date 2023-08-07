@@ -4,29 +4,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.madatour.databinding.FragmentProfileBinding;
+import com.example.madatour.databinding.FragmentParametreBinding;
 
 
-public class ProfileFragment extends Fragment {
+public class ParametreFragment extends Fragment {
 
-    private FragmentProfileBinding binding;
+    private FragmentParametreBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ProfileViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+        ParametreViewModel dashboardViewModel =
+                new ViewModelProvider(this).get(ParametreViewModel.class);
 
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentParametreBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 
