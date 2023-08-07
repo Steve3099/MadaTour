@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.madatour.R;
+import com.example.madatour.modele.Category;
 import com.example.madatour.modele.Tourism;
 import com.example.madatour.recycler.RecyclerViewInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TourismAdapter extends RecyclerView.Adapter<TourismAdapter.TourismViewHolder> {
 
@@ -25,7 +27,11 @@ public class TourismAdapter extends RecyclerView.Adapter<TourismAdapter.TourismV
     ArrayList<Tourism> listTourism;
     private Context context;
 
-
+    public void setData(List<Tourism> newData) {
+        listTourism.clear();
+        listTourism.addAll(newData);
+        notifyDataSetChanged();
+    }
 
 
     public TourismAdapter(RecyclerViewInterface recyclerViewInterface,  ArrayList<Tourism> listTourism) {

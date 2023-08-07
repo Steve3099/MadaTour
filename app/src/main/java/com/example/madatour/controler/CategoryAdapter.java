@@ -14,11 +14,18 @@ import com.example.madatour.modele.Category;
 import com.example.madatour.modele.Tourism;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>{
 
 
     ArrayList<Category> listCategory;
+
+    public void setData(List<Category> newData) {
+        listCategory.clear();
+        listCategory.addAll(newData);
+        notifyDataSetChanged();
+    }
 
     public CategoryAdapter(ArrayList<Category> listCategory) {
         this.listCategory = listCategory;

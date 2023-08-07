@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,12 +32,14 @@ import com.example.madatour.controler.TourismAdapter;
 import com.example.madatour.databinding.FragmentHomeBinding;
 import com.example.madatour.modele.Category;
 import com.example.madatour.modele.Tourism;
+import com.example.madatour.modele.Utilisateur;
 import com.example.madatour.recycler.RecyclerViewInterface;
 import com.example.madatour.service.Server;
 import com.example.madatour.service.VolleySingleton;
 import com.example.madatour.util.ApiURL;
 import com.example.madatour.util.CategImgCheck;
 import com.example.madatour.util.SpacesItemDecoration;
+import com.example.madatour.viewmodel.ViewModelDashboard;
 import com.example.madatour.vue.DetailActivity;
 
 import org.json.JSONArray;
@@ -60,11 +63,14 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
     List<Category> listCategory;
     List<Tourism> listTourism;
     private RequestQueue requestQueue;
+    ViewModelDashboard homeViewModel;
+
+    TextView username;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+         homeViewModel =
+                new ViewModelProvider(this).get(ViewModelDashboard.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -83,6 +89,14 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         requestQueue = VolleySingleton.getmInstance(view.getContext()).getRequestQueue();
         listCategory = new ArrayList<>();
         listTourism = new ArrayList<>();
+        username = view.findViewById(R.id.user_name);
+
+        Utilisateur loggedUser = homeViewModel.getUserFromPreferences(view.getContext());
+        if(loggedUser !=null){
+            username.setText(loggedUser.getNom());
+        }else{
+            username.setText("Bonjour");
+        }
 
         // Hook for recycler view
         featuredTourismRecycler = view.findViewById(R.id.featured_tourism_recycler);
@@ -92,13 +106,18 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
         // Category recycler
         featuredCategoryRecycler.setHasFixedSize(true);
         featuredCategoryRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-
+        adaptercategory = new CategoryAdapter((ArrayList<Category>) listCategory);
+        featuredCategoryRecycler.setAdapter(adaptercategory);
 
         // Tourism recycler
         featuredTourismRecycler.setHasFixedSize(true);
         featuredTourismRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
         featuredTourismRecycler.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        adapter = new TourismAdapter(this, (ArrayList<Tourism>) listTourism,context);
+        featuredTourismRecycler.setAdapter(adapter);
 
+        SpacesItemDecoration decoration = new SpacesItemDecoration(12);
+        featuredTourismRecycler.addItemDecoration(decoration);
 
         featuredCategoryRecyclerV1();
 
@@ -106,147 +125,33 @@ public class HomeFragment extends Fragment implements RecyclerViewInterface {
 
     }
 
-    private void featuredTourismRecycler() {
-        featuredTourismRecycler.setHasFixedSize(true);
-        featuredTourismRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        featuredTourismRecycler.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-        listTourism.add(new Tourism("1","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("2","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        listTourism.add(new Tourism("3","Monuments","Les monuments historique à Madagascar",String.valueOf(R.drawable.lemurs),"Monuments"));
-        adapter = new TourismAdapter(this, (ArrayList<Tourism>) listTourism);
-        featuredTourismRecycler.setAdapter(adapter);
-//        Add space in first list
-        SpacesItemDecoration decoration = new SpacesItemDecoration(20);
-        featuredTourismRecycler.addItemDecoration(decoration);
-    }
 
 
-     /*
-      Not work
-      */
-    private void featuredCategoryRecycler(Context ctx) {
-        featuredCategoryRecycler.setHasFixedSize(true);
-        featuredCategoryRecycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false));
-        adaptercategory = new CategoryAdapter((ArrayList<Category>) listCategory);
-        Log.d("LISTCATEG_LENGTH","list length"+listCategory.size());
-        listCategory = (ArrayList<Category>) new Server(ctx).getAllCategorie((CategoryAdapter) adaptercategory);
-        featuredCategoryRecycler.setAdapter(adaptercategory);
-
-//        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
-//        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
-//        listCategory.add(new Category("1","Monuments",String.valueOf(R.drawable.rova)));
-
-    }
 
     private void featuredCategoryRecyclerV1(){
-        JsonObjectRequest  jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, ApiURL.URL_CATEGORY, null  ,
-                new Response.Listener<JSONObject>() {
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Handle the successful response
-                        Log.d("TAFIDITRA","Couou");
-                        try {
-                            String message = response.getString("message");
-                            JSONArray data = response.getJSONArray("categories");
-                            if(message.equals(ApiURL.CHECK_CODE_OK)){
-                                if(data.length() > 0){
-                                    for(int i = 0; i<data.length();i++){
-
-                                        Category c = Category.createCategoryFromJsonObject(data.getJSONObject(i));
-
-                                        c.setImage(Integer.toString( CategImgCheck.returnImageCateg(c.getTitre())));
-                                        listCategory.add(c);
-                                    }
-                                }
-//
-//                                ((IWebServiceCateg)context).getResponseCateg(listCategory,null,context);
-                            }else{
-
-//                                ((IWebServiceCateg)context).getResponseCateg(null,"Error in json response",context);
-                            }
-                            adaptercategory = new CategoryAdapter((ArrayList<Category>) listCategory);
-                            featuredCategoryRecycler.setAdapter(adaptercategory);
-
-                        } catch (JSONException e) {
-//                            ((IWebServiceCateg)context).getResponseCateg(null,"Connexion impossible" +e.toString(),context);
-                            Log.d("Tonga fa json exception","Connexion impossible" +e.toString());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle the error response
-//                        ((IWebServiceCateg)context).getResponseCateg(null,"Connexion impossible" +error.toString(),context);
-                        Toast.makeText(getActivity(),"Erreur getting categori " +error.toString(), Toast.LENGTH_SHORT).show();
-                        Log.d("API response error","API response error " +error.toString());
-                    }
+        homeViewModel.fetchCategories(requestQueue);
+        homeViewModel.  getCategoryListLiveData().observe(getViewLifecycleOwner(), data -> {
+            homeViewModel.getErrorCategory().observe(getViewLifecycleOwner(),errorCategory ->{
+                if(data !=null){
+                    ((CategoryAdapter)adaptercategory).setData(data);
+                }else{
+                    Toast.makeText(getActivity(),"Erreur getting Category " +errorCategory, Toast.LENGTH_SHORT).show();
                 }
-        );
-        requestQueue.add(jsonObjectRequest);
+            });
+        });
+
     }
     private void featuredTourismRecyclerV1(){
-        RecyclerViewInterface interfaceview = this;
-        JsonObjectRequest  jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.GET, ApiURL.URL_TOURISM_ALL, null  ,
-                new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Handle the successful response
-                        Log.d("TAFIDITRA","Couou");
-                        try {
-                            String message = response.getString("message");
-                            JSONArray data = response.getJSONArray("tourismes");
-                            if(message.equals(ApiURL.CHECK_CODE_OK)){
-                                if(data.length() > 0){
-                                    for(int i = 0; i<data.length();i++){
-
-                                        Tourism t = Tourism.createTourismFromJsonObject(data.getJSONObject(i));
-
-                                        listTourism.add(t);
-                                    }
-                                }
-//
-//                                ((IWebServiceCateg)context).getResponseCateg(listCategory,null,context);
-                            }else{
-
-//                                ((IWebServiceCateg)context).getResponseCateg(null,"Error in json response",context);
-                            }
-                            adapter = new TourismAdapter(interfaceview, (ArrayList<Tourism>) listTourism,context);
-                            featuredTourismRecycler.setAdapter(adapter);
-//        Add space in first list
-                            SpacesItemDecoration decoration = new SpacesItemDecoration(20);
-                            featuredTourismRecycler.addItemDecoration(decoration);
-
-                        } catch (JSONException e) {
-//                            ((IWebServiceCateg)context).getResponseCateg(null,"Connexion impossible" +e.toString(),context);
-                            Log.d("Tonga fa json exception","Connexion impossible" +e.toString());
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle the error response
-//                        ((IWebServiceCateg)context).getResponseCateg(null,"Connexion impossible" +error.toString(),context);
-                        Toast.makeText(getActivity(),"Erreur getting tourism " +error.toString(), Toast.LENGTH_SHORT).show();
-                        Log.d("API response tourism error","API response error " +error.toString());
-                    }
+      homeViewModel.fetchTourism(requestQueue,this);
+        homeViewModel.  getTourismListLiveData().observe(getViewLifecycleOwner(), data -> {
+            homeViewModel.getErrorTourism().observe(getViewLifecycleOwner(),errorCategory ->{
+                if(data !=null){
+                    ((TourismAdapter)adapter).setData(data);
+                }else{
+                    Toast.makeText(getActivity(),"Erreur getting Category " +errorCategory, Toast.LENGTH_SHORT).show();
                 }
-        );
-        requestQueue.add(jsonObjectRequest);
+            });
+        });
     }
 
 
